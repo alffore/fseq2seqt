@@ -69,9 +69,12 @@ class PositionalEncoding(nn.Module):
 url = 'https://s3.amazonaws.com/research.metamind.io/wikitext/wikitext-2-v1.zip'
 test_filepath, valid_filepath, train_filepath = extract_archive(download_from_url(url))
 tokenizer = get_tokenizer('basic_english')
-vocab = build_vocab_from_iterator(map(tokenizer,
-                                      iter(io.open(train_filepath,
-                                                   encoding="utf8"))))
+vocab = build_vocab_from_iterator(map(tokenizer, iter(io.open(train_filepath, encoding="utf8"))))
+
+"""print(train_filepath)
+print(type(vocab))
+print(vocab.itos)
+exit(0)"""
 
 
 def data_process(raw_text_iter):
@@ -83,6 +86,9 @@ def data_process(raw_text_iter):
 train_data = data_process(iter(io.open(train_filepath, encoding="utf8")))
 val_data = data_process(iter(io.open(valid_filepath, encoding="utf8")))
 test_data = data_process(iter(io.open(test_filepath, encoding="utf8")))
+
+"""print(val_data)
+exit(0)"""
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -138,6 +144,14 @@ def train():
         if data.size(0) != bptt:
             src_mask = model.generate_square_subsequent_mask(data.size(0)).to(device)
         output = model(data, src_mask)
+        if i % 10 == 0:
+            print("data:")
+            print(data)
+            print("targets:")
+            print(targets)
+            print("output:")
+            print(output)
+
         loss = criterion(output.view(-1, ntokens), targets)
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 0.5)
