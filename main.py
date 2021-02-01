@@ -6,7 +6,6 @@ import time
 import math
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import io
 from torchtext.utils import download_from_url, extract_archive
 from torchtext.data.utils import get_tokenizer
@@ -123,7 +122,7 @@ ntokens = len(vocab.stoi)  # the size of vocabulary
 emsize = 200  # embedding dimension
 nhid = 200  # the dimension of the feedforward network model in nn.TransformerEncoder
 nlayers = 2  # the number of nn.TransformerEncoderLayer in nn.TransformerEncoder
-nhead = 2  # the number of heads in the multiheadattention models
+nhead = 2  # the number of heads in the multihead attention models
 dropout = 0.2  # the dropout value
 model = TransformerModel(ntokens, emsize, nhead, nhid, nlayers, dropout).to(device)
 
@@ -144,13 +143,13 @@ def train():
         if data.size(0) != bptt:
             src_mask = model.generate_square_subsequent_mask(data.size(0)).to(device)
         output = model(data, src_mask)
-        if i % 10 == 0:
+        """ if i % 10 == 0:
             print("data:")
             print(data)
             print("targets:")
             print(targets)
             print("output:")
-            print(output)
+            print(output) """
 
         loss = criterion(output.view(-1, ntokens), targets)
         loss.backward()
