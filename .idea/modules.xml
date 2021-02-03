@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ciaf2f/.idea/ciaf2f.iml" filepath="$PROJECT_DIR$/../ciaf2f/.idea/ciaf2f.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/fseq2seqt.iml" filepath="$PROJECT_DIR$/.idea/fseq2seqt.iml" />
     </modules>
   </component>

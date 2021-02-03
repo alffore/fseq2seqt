@@ -81,13 +81,19 @@ def data_process(raw_text_iter):
                          dtype=torch.long) for item in raw_text_iter]
     return torch.cat(tuple(filter(lambda t: t.numel() > 0, data)))
 
+# Test que hace data process
+# ladato=['Helle word, what´s the fuck do you do?','where are you doing in this?']
+# res=data_process(ladato)
+# print(res)
+# exit(0)
+
 
 train_data = data_process(iter(io.open(train_filepath, encoding="utf8")))
 val_data = data_process(iter(io.open(valid_filepath, encoding="utf8")))
 test_data = data_process(iter(io.open(test_filepath, encoding="utf8")))
 
-"""print(val_data)
-exit(0)"""
+# print(val_data)
+# exit(0)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
